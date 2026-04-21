@@ -119,6 +119,38 @@ app.post("/addCategorySubmit", imageUpload.single("image"), (req, res) => {
   );
 });
 
+app.post("/addDrSubmit", imageUpload.single("image"), (req, res) => {
+  if (!req.file) return res.send({ error: "Image required" });
+
+  const img = fs.readFileSync(req.file.path);
+
+  db_conn.query(
+    `INSERT INTO dr_details 
+    (dr_name, dr_catid, dr_image, gender, dob, doj, address1, address2, email, pwd, degree, experience, fees, about)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      req.body.drname,
+      req.body.dr_catid,
+      img,
+      req.body.gender,
+      req.body.dob,
+      req.body.doj,
+      req.body.address1,
+      req.body.address2,
+      req.body.email,
+      req.body.pwd,
+      req.body.degree,
+      req.body.experience,
+      req.body.fees,
+      req.body.about,
+    ],
+    (err) => {
+      if (err) return res.send({ error: err.sqlMessage });
+      res.send({ msg: "ok" });
+    }
+  );
+});
+
 // DOCTOR LIST
 app.get("/alldoctorslist", (req, res) => {
   db_conn.query(
