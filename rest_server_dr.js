@@ -12,11 +12,11 @@ const mysql = require("mysql2");
 
 // ================= DATABASE =================
 const db_conn = mysql.createConnection({
-  host: process.env.DB_HOST || "shinkansen.proxy.rlwy.net",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "hHvPJGKhyLeznWAFqcXdaejclEnsWptH",
-  database: process.env.DB_NAME || "railway",
-  port: process.env.DB_PORT || 13830,
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
 });
 
 db_conn.connect((err) => {
