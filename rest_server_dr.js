@@ -120,7 +120,7 @@ app.post("/addDrSubmit", imageUpload.single("image"), (req, res) => {
   const img = fs.readFileSync(req.file.path);
 
   db_conn.query(
-    `INSERT INTO dr_details 
+    `INSERT INTO dr_details
     (dr_name, dr_catid, dr_image, gender, dob, doj, address1, address2, email, pwd, degree, experience, fees, about)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
