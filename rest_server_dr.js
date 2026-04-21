@@ -12,11 +12,11 @@ const mysql = require("mysql2");
 
 // ================= DATABASE =================
 const db_conn = mysql.createConnection({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT,
+  host: "shinkansen.proxy.rlwy.net",
+  user: "root",
+  password: "abhi@",   // your password
+  database: "railway",
+  port: 13830,
 });
 
 db_conn.connect((err) => {
@@ -49,17 +49,12 @@ app.get("/list_dr_category", (req, res) => {
   db_conn.query(
     "SELECT id, cat_name, catimage FROM dr_category",
     (err, result) => {
-      if (err) return res.status(500).send({ msg: "error" });
+      if (err) {
+        console.log("❌ SQL ERROR:", err); // 🔥 ADD THIS
+        return res.status(500).send({ msg: "error", error: err.message });
+      }
 
-      const data = result.map((item) => ({
-        id: item.id,
-        catname: item.cat_name,
-        catimage: item.catimage
-          ? item.catimage.toString("base64")
-          : null,
-      }));
-
-      res.send({ msg: "ok", result: data });
+      res.send({ msg: "ok", result });
     }
   );
 });
