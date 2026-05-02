@@ -197,7 +197,7 @@ app.get("/alldoctorslist", async (req, res) => {
 
 // ================= ADD DOCTOR =================
 
-app.post("/addDoctor", upload.single("image"), async (req, res) => {
+app.post("/addDrSubmit", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
       return res.send({ error: "Image required" });
